@@ -1,0 +1,10 @@
+{
+  "name": "getbasis-menu",
+  "version": "1.0.0",
+  "author": "inc2734",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getbasis/menu"
+  }
+}
