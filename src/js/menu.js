@@ -3,39 +3,32 @@
 import $ from 'jquery';
 
 export default class BasisMenu {
-  constructor(params) {
-    this.params = $.extend({
-      container: '._c-menu'
-    }, params);
-
-    this.container = $(this.params.container);
+  constructor() {
+    this.container = $('[data-c="menu"]');
     this.setListener();
   }
 
   setListener() {
-    this.container.each((i, e) => {
-      const container = $(e);
+    this.container.find('[aria-haspopup="true"]').each((i, e) => {
+      const item = $(e);
 
-      const hasSubmenus = container.find('[aria-expanded]');
-      hasSubmenus.each((i, e) => {
-        const item = $(e);
+      item.on('mouseover focus', (event) => {
+        const submenu = item.children('[data-c="menu__submenu"]');
+        this.show(submenu);
+      });
 
-        item.on('mouseover', (event) => {
-          this.open(item);
-        }, false);
-
-        item.on('mouseleave', (event) => {
-          this.close(item);
-        }, false);
+      item.on('mouseleave', (event) => {
+        const submenu = item.children('[data-c="menu__submenu"]');
+        this.hidden(submenu);
       });
     });
   }
 
-  open(item) {
-    item.attr('aria-expanded', 'true');
+  show(submenu) {
+    submenu.attr('aria-hidden', 'false');
   }
 
-  close(item) {
-    item.attr('aria-expanded', 'false');
+  hidden(submenu) {
+    submenu.attr('aria-hidden', 'true');
   }
 }
